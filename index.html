@@ -105,7 +105,7 @@ input{height:47px}
   .logo{width:53px;height:53px}
 }
 
-/* V6 opening: restrained typewriter reveal */
+/* V8 opening: measured editorial typewriter reveal */
 .splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(150deg,#060d17,#09172a 57%,#050b14);color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity .65s ease;isolation:isolate}
 .splash.leaving{opacity:0;pointer-events:none}
 .splash-copy{width:100%;max-width:680px;text-align:center;display:flex;flex-direction:column;gap:28px;align-items:center;transform:translateY(-2vh)}
@@ -240,7 +240,7 @@ input{height:47px}
     setTimeout(()=>splash.remove(),700);
   }
   // Independent failsafe, unaffected by the animation code below.
-  setTimeout(close,11000);
+  setTimeout(close,30000);
   document.getElementById('skipSplash').addEventListener('click',close);
   const reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pause=ms=>new Promise(resolve=>clock.push(setTimeout(resolve,ms)));
@@ -252,7 +252,12 @@ input{height:47px}
     for(const character of characters){
       if(closed)return;
       span.textContent+=character;
-      await pause(/[.!?]/.test(character)?speed+150:speed);
+      // A deliberately measured, human-paced newspaper typewriter rhythm.
+      // Punctuation gets a longer stop; spaces are a touch shorter.
+      const punctuation=/[.!?]/.test(character);
+      const comma=/[,;:]/.test(character);
+      const delay=punctuation?speed+410:comma?speed+210:character===' '?speed-25:speed;
+      await pause(delay);
     }
     line.classList.remove('typing');
     line.classList.add('done');
@@ -269,15 +274,15 @@ input{height:47px}
       close();
       return;
     }
-    await pause(350);
-    await type(lines[0],34);
-    await pause(400);
-    await type(lines[1],36);
-    await pause(470);
-    await type(lines[2],40);
-    await pause(200);
-    credit.classList.add('visible');
+    await pause(650);
+    await type(lines[0],125);
     await pause(1150);
+    await type(lines[1],130);
+    await pause(1300);
+    await type(lines[2],130);
+    await pause(650);
+    credit.classList.add('visible');
+    await pause(3000);
     close();
   }
   start().catch(()=>close());
@@ -445,7 +450,7 @@ input{height:47px}
   });
 
   $('export').onclick=()=>{
-    const blob=new Blob([JSON.stringify({app:'AVALANCHE',version:7,memories},null,2)],{type:'application/json'});
+    const blob=new Blob([JSON.stringify({app:'AVALANCHE',version:8,memories},null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
     a.href=url;
