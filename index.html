@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-title" content="AVALANCHE">
 <meta name="theme-color" content="#07101b">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AVALANCHE">
+<link rel="apple-touch-icon" sizes="1024x1024" href="apple-touch-icon.png?v=4">
+<link rel="icon" type="image/png" href="apple-touch-icon.png?v=4">
 <title>AVALANCHE</title>
 <style>
 :root{
@@ -100,31 +104,34 @@ input{height:47px}
   .brandwrap{gap:10px}
   .logo{width:40px;height:40px}
 }
+
+/* V3 opening: typography only. No artwork, particles or decorative effects. */
+.splash{position:fixed;inset:0;z-index:1000;background:#07101b;color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity .65s ease;isolation:isolate}
+.splash.leaving{opacity:0;pointer-events:none}
+.splash-copy{width:100%;max-width:590px;text-align:center;display:flex;flex-direction:column;gap:23px;align-items:center}
+.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.015em;opacity:0;transform:translateY(9px);transition:opacity .85s ease,transform .85s ease;text-wrap:balance}
+.splash-line.visible{opacity:1;transform:translateY(0)}
+.splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;transition:opacity .8s ease}
+.splash-credit.visible{opacity:1}
+.splash-skip{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));right:27px;border:0;background:transparent;color:#9eb6c8;padding:13px 5px;font-size:12px;letter-spacing:.06em}
+@media(prefers-reduced-motion:reduce){.splash,.splash-line,.splash-credit{transition:none}.splash-line{transform:none}}
 </style>
 </head>
 <body>
+<section class="splash" id="splash" aria-label="Opening Muhammad Ali quote">
+  <div class="splash-copy">
+    <p class="splash-line">I KNOW YOU’VE GOT HIM PICKED.</p>
+    <p class="splash-line">BUT THE MAN’S IN TROUBLE.</p>
+    <p class="splash-line">I’M GONNA SHOW YOU HOW GREAT I AM.</p>
+    <p class="splash-credit">— MUHAMMAD ALI</p>
+  </div>
+  <button type="button" class="splash-skip" id="skipSplash" aria-label="Skip opening">Skip →</button>
+</section>
+
 <main class="app">
   <header class="top">
     <div class="brandwrap">
-      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-        <defs>
-          <linearGradient id="iceGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#edf9ff"/>
-            <stop offset="55%" stop-color="#badcf5"/>
-            <stop offset="100%" stop-color="#7ea8ca"/>
-          </linearGradient>
-          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#d7f1ff"/>
-            <stop offset="100%" stop-color="#7dacd2"/>
-          </linearGradient>
-        </defs>
-        <circle cx="32" cy="32" r="27" fill="none" stroke="url(#lineGrad)" stroke-width="2.8" opacity=".95"/>
-        <path d="M13 38.5C20 32 25 19 34 17.5c7.5-1.1 10.5 5.1 15 5.7" fill="none" stroke="url(#lineGrad)" stroke-width="1.6" opacity=".85" stroke-linecap="round"/>
-        <path d="M12.5 40.5c5.6-1.9 11.3-.6 15.7-2.4 5.5-2.3 8-8 13.8-10.3 5.3-2 8.1-1.1 10.8-.3" fill="none" stroke="url(#lineGrad)" stroke-width="1.3" opacity=".45" stroke-linecap="round"/>
-        <path d="M14 43c8.5-5.7 17.4-15.5 22.1-22.2 2.8 3.6 6.4 7.8 13.2 18.8-4.3-2.7-7.6-5.2-10.7-6.5-2.5 3.2-5 6.6-8.2 10.7-4.5-1.1-8.8-.9-16.4-.8z" fill="url(#iceGrad)" opacity=".18"/>
-        <path d="M19 39.5c6.4-4.9 12.5-12.6 17.1-19.3 4.5 6 7.9 10.8 11.4 16.6-3.2-1.9-5.8-3.5-8.9-4.8-2.4 3-4.5 5.7-7.4 9.4" fill="none" stroke="url(#iceGrad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M15.5 44.5c7.4-1 11.7.1 15.5-1.2 5.9-2 9.1-8.6 13.3-10.1 2.1-.7 4.2-.4 5.8.2-1.7-1.8-3.6-3.6-5.7-5.4-4.3 6.3-10.7 12.5-14.1 14.1-3.6 1.8-7.8 1.5-14.8 2.4z" fill="url(#iceGrad)" opacity=".58"/>
-      </svg>
+      <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
       <div>
         <div class="wordmark">AVALANCHE</div>
         <div class="sub">Quiet until unstoppable</div>
@@ -160,22 +167,7 @@ input{height:47px}
   <div class="inner">
     <div class="overlayheader">
       <div class="overlaybrand">
-        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-          <defs>
-            <linearGradient id="iceGrad2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#edf9ff"/>
-              <stop offset="55%" stop-color="#badcf5"/>
-              <stop offset="100%" stop-color="#7ea8ca"/>
-            </linearGradient>
-            <linearGradient id="lineGrad2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#d7f1ff"/>
-              <stop offset="100%" stop-color="#7dacd2"/>
-            </linearGradient>
-          </defs>
-          <circle cx="32" cy="32" r="27" fill="none" stroke="url(#lineGrad2)" stroke-width="2.8" opacity=".95"/>
-          <path d="M19 39.5c6.4-4.9 12.5-12.6 17.1-19.3 4.5 6 7.9 10.8 11.4 16.6-3.2-1.9-5.8-3.5-8.9-4.8-2.4 3-4.5 5.7-7.4 9.4" fill="none" stroke="url(#iceGrad2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15.5 44.5c7.4-1 11.7.1 15.5-1.2 5.9-2 9.1-8.6 13.3-10.1 2.1-.7 4.2-.4 5.8.2-1.7-1.8-3.6-3.6-5.7-5.4-4.3 6.3-10.7 12.5-14.1 14.1-3.6 1.8-7.8 1.5-14.8 2.4z" fill="url(#iceGrad2)" opacity=".58"/>
-        </svg>
+        <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
         <span class="sub">AVALANCHE / NEW MEMORY</span>
       </div>
       <button class="x" id="closeEditor" aria-label="Close">×</button>
@@ -202,22 +194,7 @@ input{height:47px}
   <div class="inner">
     <div class="overlayheader">
       <div class="overlaybrand">
-        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-          <defs>
-            <linearGradient id="iceGrad3" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#edf9ff"/>
-              <stop offset="55%" stop-color="#badcf5"/>
-              <stop offset="100%" stop-color="#7ea8ca"/>
-            </linearGradient>
-            <linearGradient id="lineGrad3" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#d7f1ff"/>
-              <stop offset="100%" stop-color="#7dacd2"/>
-            </linearGradient>
-          </defs>
-          <circle cx="32" cy="32" r="27" fill="none" stroke="url(#lineGrad3)" stroke-width="2.8" opacity=".95"/>
-          <path d="M19 39.5c6.4-4.9 12.5-12.6 17.1-19.3 4.5 6 7.9 10.8 11.4 16.6-3.2-1.9-5.8-3.5-8.9-4.8-2.4 3-4.5 5.7-7.4 9.4" fill="none" stroke="url(#iceGrad3)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15.5 44.5c7.4-1 11.7.1 15.5-1.2 5.9-2 9.1-8.6 13.3-10.1 2.1-.7 4.2-.4 5.8.2-1.7-1.8-3.6-3.6-5.7-5.4-4.3 6.3-10.7 12.5-14.1 14.1-3.6 1.8-7.8 1.5-14.8 2.4z" fill="url(#iceGrad3)" opacity=".58"/>
-        </svg>
+        <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
         <span class="wordmark">AVALANCHE</span>
       </div>
       <button class="x" id="closeViewer" aria-label="Close slideshow">×</button>
@@ -241,6 +218,34 @@ input{height:47px}
   </div>
 </section>
 
+<script>
+(()=>{
+  const splash=document.getElementById('splash');
+  const lines=[...splash.querySelectorAll('.splash-line')];
+  const credit=splash.querySelector('.splash-credit');
+  let finished=false;
+  const pending=[];
+  const queue=(fn,ms)=>pending.push(setTimeout(fn,ms));
+  function finish(){
+    if(finished)return;
+    finished=true;
+    pending.forEach(clearTimeout);
+    splash.classList.add('leaving');
+    setTimeout(()=>splash.remove(),700);
+  }
+  document.getElementById('skipSplash').addEventListener('click',finish);
+  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){
+    lines.forEach(line=>line.classList.add('visible'));
+    credit.classList.add('visible');
+    queue(finish,2200);
+  }else{
+    [250,1350,2450].forEach((ms,i)=>queue(()=>lines[i].classList.add('visible'),ms));
+    queue(()=>credit.classList.add('visible'),3180);
+    queue(finish,5100);
+  }
+})();
+</script>
 <script>
 (()=>{
   'use strict';
