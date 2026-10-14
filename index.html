@@ -130,9 +130,9 @@ input{height:47px}
 <body>
 <section class="splash" id="splash" aria-label="Opening Muhammad Ali quote">
   <div class="splash-copy">
-    <p class="splash-line" data-text="I KNOW YOU’VE GOT HIM PICKED."><span></span></p>
-    <p class="splash-line" data-text="BUT THE MAN’S IN TROUBLE."><span></span></p>
-    <p class="splash-line final" data-text="I’M GONNA SHOW YOU HOW GREAT I AM."><span></span></p>
+    <p class="splash-line">I KNOW YOU’VE GOT HIM PICKED.</p>
+    <p class="splash-line">BUT THE MAN’S IN TROUBLE.</p>
+    <p class="splash-line final">I’M GONNA SHOW YOU HOW GREAT I AM.</p>
     <p class="splash-credit">— MUHAMMAD ALI</p>
   </div>
   <button type="button" class="splash-skip" id="skipSplash" aria-label="Skip opening">Skip →</button>
@@ -228,64 +228,17 @@ input{height:47px}
 (()=>{
   'use strict';
   const splash=document.getElementById('splash');
-  const lines=Array.from(splash.querySelectorAll('.splash-line'));
-  const credit=splash.querySelector('.splash-credit');
-  const clock=[];
   let closed=false;
   function close(){
     if(closed)return;
     closed=true;
-    clock.forEach(clearTimeout);
     splash.classList.add('leaving');
-    setTimeout(()=>splash.remove(),700);
+    setTimeout(()=>splash.remove(),1150);
   }
-  // Independent failsafe, unaffected by the animation code below.
-  setTimeout(close,30000);
   document.getElementById('skipSplash').addEventListener('click',close);
-  const reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const pause=ms=>new Promise(resolve=>clock.push(setTimeout(resolve,ms)));
-  async function type(line,speed){
-    const span=line.querySelector('span');
-    if(!span)return;
-    line.classList.add('typing');
-    const characters=Array.from(line.getAttribute('data-text')||'');
-    for(const character of characters){
-      if(closed)return;
-      span.textContent+=character;
-      // A deliberately measured, human-paced newspaper typewriter rhythm.
-      // Punctuation gets a longer stop; spaces are a touch shorter.
-      const punctuation=/[.!?]/.test(character);
-      const comma=/[,;:]/.test(character);
-      const delay=punctuation?speed+410:comma?speed+210:character===' '?speed-25:speed;
-      await pause(delay);
-    }
-    line.classList.remove('typing');
-    line.classList.add('done');
-  }
-  async function start(){
-    if(reduced){
-      lines.forEach(line=>{
-        const span=line.querySelector('span');
-        if(span)span.textContent=line.getAttribute('data-text')||'';
-        line.classList.add('done');
-      });
-      credit.classList.add('visible');
-      await pause(1500);
-      close();
-      return;
-    }
-    await pause(650);
-    await type(lines[0],125);
-    await pause(1150);
-    await type(lines[1],130);
-    await pause(1300);
-    await type(lines[2],130);
-    await pause(650);
-    credit.classList.add('visible');
-    await pause(3000);
-    close();
-  }
-  start().catch(()=>close());
+  // Full text is available immediately even if JavaScript fails.
+  // Allow time to read it; no letter or sentence animations.
+  setTimeout(close,7800);
 })();
 </script>
 <script>
