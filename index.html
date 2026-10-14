@@ -166,7 +166,6 @@ input{height:47px}
     <button class="filter" data-filter="action">Actions</button>
   </nav>
 
-  <div class="count" id="count"></div>
   <div id="entries"></div>
 
 </main>
@@ -209,7 +208,6 @@ input{height:47px}
     </div>
     <div class="slide">
       <div class="slidebody">
-        <div class="entrytype" id="slideType"></div>
         <div id="slideContent"></div>
         <div class="slidemeta" id="slideMeta"></div>
       </div>
@@ -228,30 +226,61 @@ input{height:47px}
 
 <script>
 (()=>{
+  'use strict';
   const splash=document.getElementById('splash');
-  const lines=[...splash.querySelectorAll('.splash-line')];
+  const lines=Array.from(splash.querySelectorAll('.splash-line'));
   const credit=splash.querySelector('.splash-credit');
-  let finished=false;
-  const pending=[];
-  const queue=(fn,ms)=>pending.push(setTimeout(fn,ms));
-  function finish(){
-    if(finished)return;
-    finished=true;
-    pending.forEach(clearTimeout);
+  const clock=[];
+  let closed=false;
+  function close(){
+    if(closed)return;
+    closed=true;
+    clock.forEach(clearTimeout);
     splash.classList.add('leaving');
     setTimeout(()=>splash.remove(),700);
   }
-  document.getElementById('skipSplash').addEventListener('click',finish);
-  const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){
-    lines.forEach(line=>line.classList.add('visible'));
-    credit.classList.add('visible');
-    queue(finish,2200);
-  }else{
-    [450,1900,3400].forEach((ms,i)=>queue(()=>lines[i].classList.add('visible'),ms));
-    queue(()=>credit.classList.add('visible'),4450);
-    queue(finish,7200);
+  // Independent failsafe, unaffected by the animation code below.
+  setTimeout(close,11000);
+  document.getElementById('skipSplash').addEventListener('click',close);
+  const reduced=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pause=ms=>new Promise(resolve=>clock.push(setTimeout(resolve,ms)));
+  async function type(line,speed){
+    const span=line.querySelector('span');
+    if(!span)return;
+    line.classList.add('typing');
+    const characters=Array.from(line.getAttribute('data-text')||'');
+    for(const character of characters){
+      if(closed)return;
+      span.textContent+=character;
+      await pause(/[.!?]/.test(character)?speed+150:speed);
+    }
+    line.classList.remove('typing');
+    line.classList.add('done');
   }
+  async function start(){
+    if(reduced){
+      lines.forEach(line=>{
+        const span=line.querySelector('span');
+        if(span)span.textContent=line.getAttribute('data-text')||'';
+        line.classList.add('done');
+      });
+      credit.classList.add('visible');
+      await pause(1500);
+      close();
+      return;
+    }
+    await pause(350);
+    await type(lines[0],34);
+    await pause(400);
+    await type(lines[1],36);
+    await pause(470);
+    await type(lines[2],40);
+    await pause(200);
+    credit.classList.add('visible');
+    await pause(1150);
+    close();
+  }
+  start().catch(()=>close());
 })();
 </script>
 <script>
@@ -260,14 +289,16 @@ input{height:47px}
   const KEY='avalanche.memories.v1';
   const $=id=>document.getElementById(id);
   let memories=[];
+  let storageReadFailed=false;
   try{
     const v=JSON.parse(localStorage.getItem(KEY)||'[]');
     if(Array.isArray(v))memories=v.filter(e=>e&&typeof e.text==='string').map(e=>({...e,type:e.type==='action'?'action':'quote'}));
-  }catch(e){}
+  }catch(e){storageReadFailed=true;alert('Your saved memories could not be read on this browser. AVALANCHE will not change your existing storage unless you save or import an entry.');}
 
   let filter='all',kind='quote',editId=null,slides=[],slideIndex=0,timer=null;
 
   const saveData=()=>{
+    if(storageReadFailed){alert('Storage could not be read; no changes have been saved. Export your data from the original browser if possible.');return;}
     try{localStorage.setItem(KEY,JSON.stringify(memories));}
     catch(e){alert('Unable to save on this device. Try exporting a backup.');}
   };
@@ -283,7 +314,6 @@ input{height:47px}
 
   function render(){
     const list=memories.filter(e=>filter==='all'||e.type===filter).slice().reverse();
-    $('count').textContent=`${list.length} ${list.length===1?'memory':'memories'}`;
     $('entries').replaceChildren();
     if(!list.length){
       $('entries').append(safeText('div','empty','Your words and moments will appear here.'));
@@ -291,7 +321,6 @@ input{height:47px}
     }
     for(const e of list){
       const el=safeText('article','entry','');
-      el.append(safeText('div','entrytype',e.type==='quote'?'WORDS':'ACTION'));
       el.append(safeText('div',e.type==='quote'?'quote':'act',e.type==='quote'?'“'+e.text+'”':e.text));
       if(meta(e)) el.append(safeText('div','meta',meta(e)));
       const actions=safeText('div','entryactions','');
@@ -367,7 +396,6 @@ input{height:47px}
   function showSlide(){
     const e=slides[slideIndex];
     if(!e) return;
-    $('slideType').textContent=e.type==='quote'?'WORDS':'ACTION';
     const c=$('slideContent');
     c.className=e.type==='quote'?'slidequote':'slideact';
     c.textContent=e.type==='quote'?'“'+e.text+'”':e.text;
@@ -417,7 +445,7 @@ input{height:47px}
   });
 
   $('export').onclick=()=>{
-    const blob=new Blob([JSON.stringify({app:'AVALANCHE',version:6,memories},null,2)],{type:'application/json'});
+    const blob=new Blob([JSON.stringify({app:'AVALANCHE',version:7,memories},null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
     a.href=url;
