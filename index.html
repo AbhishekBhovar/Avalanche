@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-title" content="AVALANCHE">
-<meta name="theme-color" content="#07101b">
+<meta name="theme-color" content="#10243a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="AVALANCHE">
-<link rel="apple-touch-icon" sizes="1024x1024" href="apple-touch-icon.png?v=4">
-<link rel="icon" type="image/png" href="apple-touch-icon.png?v=4">
+<link rel="apple-touch-icon" sizes="1024x1024" href="apple-touch-icon.png?v=5">
+<link rel="icon" type="image/png" href="apple-touch-icon.png?v=5">
 <title>AVALANCHE</title>
 <style>
 :root{
@@ -43,11 +43,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 button{cursor:pointer;touch-action:manipulation}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ice);outline-offset:3px}
 .app{max-width:720px;margin:auto;padding:0 23px max(45px,env(safe-area-inset-bottom))}
-.top{display:flex;justify-content:space-between;align-items:flex-start;padding:34px 0 14px;gap:18px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:24px 0 23px;gap:18px;position:relative;margin-bottom:28px}.top:before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);background:linear-gradient(120deg,#152d45,#10253a 65%,#0d2136);border-bottom:1px solid #36516a}
 .brandwrap{display:flex;align-items:center;gap:12px;min-width:0}
-.logo{width:44px;height:44px;flex:0 0 auto;display:block;filter:drop-shadow(0 0 10px rgba(166,214,255,.15))}
-.wordmark{font-size:15px;letter-spacing:.31em;font-weight:720;color:var(--brand);text-shadow:0 0 10px rgba(173,219,255,.12)}
-.sub{font-size:10px;letter-spacing:.19em;color:var(--ice2);text-transform:uppercase}
+.logo{width:54px;height:54px;flex:0 0 auto;display:block;object-fit:contain;filter:drop-shadow(0 0 6px rgba(166,214,255,.13))}
+.wordmark{font-size:15px;letter-spacing:.20em;font-weight:720;color:var(--brand);text-shadow:0 0 10px rgba(173,219,255,.12)}
+.sub{font-size:10px;letter-spacing:.015em;color:#bbcfdf;line-height:1.5}
 .topright{display:flex;gap:14px;flex-shrink:0}
 .linkbtn{border:0;background:none;color:var(--brand);padding:5px 0;font-size:13px}
 .motto{color:#b7c8d8;font:italic 19px/1.5 Georgia,serif;margin:30px 0 34px;max-width:430px}
@@ -57,7 +57,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px soli
 .filters{display:flex;gap:22px;border-bottom:1px solid var(--line);margin-bottom:8px}
 .filter{padding:12px 0;background:none;border:0;color:var(--muted);border-bottom:2px solid transparent}
 .filter.active{color:var(--fg);border-color:var(--ice)}
-.count{margin:23px 0 14px;color:var(--muted);font-size:12px;letter-spacing:.04em}
+.count{margin:20px 0 3px;color:#738ba0;font-size:11px;letter-spacing:.03em}
 .entry{padding:24px 2px 25px;border-bottom:1px solid var(--line);position:relative}
 .entrytype{font-size:10px;letter-spacing:.17em;color:#a7c0d6;text-transform:uppercase;margin-bottom:14px}
 .quote{font:normal clamp(23px,5vw,32px)/1.42 Georgia,"Times New Roman",serif;letter-spacing:-.025em;white-space:pre-wrap}
@@ -95,26 +95,33 @@ input{height:47px}
 .notice{font-size:12px;color:#a4bacb;margin-top:8px}
 .hidden{display:none!important}
 @media(max-width:520px){
-  .top{padding-top:27px}
+  .top{padding-top:20px;padding-bottom:21px;margin-bottom:25px}
   .motto{margin-top:28px}
   .controls{gap:9px}
   .primary,.secondary{padding:10px 12px}
   .entry{padding-top:21px}
   .wordmark{font-size:14px}
-  .brandwrap{gap:10px}
-  .logo{width:40px;height:40px}
+  .brandwrap{gap:9px}
+  .logo{width:53px;height:53px}
 }
 
 /* V3 opening: typography only. No artwork, particles or decorative effects. */
-.splash{position:fixed;inset:0;z-index:1000;background:#07101b;color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity .65s ease;isolation:isolate}
+.splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(150deg,#060d17,#09172a 57%,#050b14);color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity .65s ease;isolation:isolate}
 .splash.leaving{opacity:0;pointer-events:none}
-.splash-copy{width:100%;max-width:590px;text-align:center;display:flex;flex-direction:column;gap:23px;align-items:center}
-.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.015em;opacity:0;transform:translateY(9px);transition:opacity .85s ease,transform .85s ease;text-wrap:balance}
-.splash-line.visible{opacity:1;transform:translateY(0)}
+.splash-copy{width:100%;max-width:590px;text-align:center;display:flex;flex-direction:column;gap:26px;align-items:center;transform:translateY(-2vh)}
+.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.015em;opacity:0;transform:translateY(16px) scale(.965);filter:blur(5px);transition:opacity 1.1s cubic-bezier(.2,.8,.2,1),transform 1.4s cubic-bezier(.2,.8,.2,1),filter 1.2s ease;text-wrap:balance}
+.splash-line.visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+.splash-line:nth-child(3){font-weight:600;color:#f0f8ff;text-shadow:0 0 34px rgba(167,207,246,.15)}
 .splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;transition:opacity .8s ease}
 .splash-credit.visible{opacity:1}
 .splash-skip{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));right:27px;border:0;background:transparent;color:#9eb6c8;padding:13px 5px;font-size:12px;letter-spacing:.06em}
-@media(prefers-reduced-motion:reduce){.splash,.splash-line,.splash-credit{transition:none}.splash-line{transform:none}}
+@media(prefers-reduced-motion:reduce){.splash,.splash-line,.splash-credit{transition:none}.splash-line{transform:none;filter:none}}
+.tools{position:relative;flex-shrink:0}
+.tools summary{list-style:none;display:flex;align-items:center;justify-content:center;font-size:25px;color:#c7ddec;letter-spacing:.03em;cursor:pointer;width:42px;height:42px;touch-action:manipulation}
+.tools summary::-webkit-details-marker{display:none}
+.tools-menu{position:absolute;right:0;top:48px;min-width:168px;padding:9px 15px;background:#172e43;border:1px solid #39556d;border-radius:10px;z-index:3;box-shadow:0 12px 24px #0006;display:flex;flex-direction:column;gap:9px}
+.tools-menu .linkbtn{text-align:left;white-space:nowrap}
+@media(max-width:440px){.top .sub{max-width:200px}.wordmark{font-size:13px;letter-spacing:.15em}}
 </style>
 </head>
 <body>
@@ -131,20 +138,19 @@ input{height:47px}
 <main class="app">
   <header class="top">
     <div class="brandwrap">
-      <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
+      <img class="logo" src="avalanche-emblem.png?v=5" alt="AVALANCHE mountain logo">
       <div>
         <div class="wordmark">AVALANCHE</div>
-        <div class="sub">Quiet until unstoppable</div>
+        <div class="sub">Work hard in silence. Let success be your noise.</div>
       </div>
     </div>
-    <div class="topright">
-      <button class="linkbtn" id="export">Export</button>
-      <button class="linkbtn" id="import">Import</button>
-      <input type="file" id="importFile" accept="application/json" hidden>
-    </div>
+    <details class="tools"><summary aria-label="More options">···</summary><div class="tools-menu">
+      <button class="linkbtn" id="export">Export backup</button>
+      <button class="linkbtn" id="import">Import backup</button>
+    </div></details>
+    <input type="file" id="importFile" accept="application/json" hidden>
   </header>
 
-  <p class="motto">Work hard in silence.<br>Let success be your noise.</p>
 
   <div class="controls">
     <button class="primary" id="add">+ Add memory</button>
@@ -160,14 +166,13 @@ input{height:47px}
   <div class="count" id="count"></div>
   <div id="entries"></div>
 
-  <footer class="foot">Private on this device · Back up your memories with Export</footer>
 </main>
 
 <section class="overlay hidden" id="editor" aria-label="Edit memory">
   <div class="inner">
     <div class="overlayheader">
       <div class="overlaybrand">
-        <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
+        <img class="logo" src="avalanche-emblem.png?v=5" alt="AVALANCHE mountain logo">
         <span class="sub">AVALANCHE / NEW MEMORY</span>
       </div>
       <button class="x" id="closeEditor" aria-label="Close">×</button>
@@ -194,7 +199,7 @@ input{height:47px}
   <div class="inner">
     <div class="overlayheader">
       <div class="overlaybrand">
-        <img class="logo" src="apple-touch-icon.png?v=4" alt="AVALANCHE mountain logo">
+        <img class="logo" src="avalanche-emblem.png?v=5" alt="AVALANCHE mountain logo">
         <span class="wordmark">AVALANCHE</span>
       </div>
       <button class="x" id="closeViewer" aria-label="Close slideshow">×</button>
@@ -240,9 +245,9 @@ input{height:47px}
     credit.classList.add('visible');
     queue(finish,2200);
   }else{
-    [250,1350,2450].forEach((ms,i)=>queue(()=>lines[i].classList.add('visible'),ms));
-    queue(()=>credit.classList.add('visible'),3180);
-    queue(finish,5100);
+    [450,1900,3400].forEach((ms,i)=>queue(()=>lines[i].classList.add('visible'),ms));
+    queue(()=>credit.classList.add('visible'),4450);
+    queue(finish,7200);
   }
 })();
 </script>
@@ -278,7 +283,7 @@ input{height:47px}
     $('count').textContent=`${list.length} ${list.length===1?'memory':'memories'}`;
     $('entries').replaceChildren();
     if(!list.length){
-      $('entries').append(safeText('div','empty','A quiet place to remember.'));
+      $('entries').append(safeText('div','empty','Your words and moments will appear here.'));
       return;
     }
     for(const e of list){
