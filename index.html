@@ -109,11 +109,11 @@ input{height:47px}
 .splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(150deg,#060d17,#09172a 57%,#050b14);color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity 1s ease;isolation:isolate}
 .splash.leaving{opacity:0;pointer-events:none}
 .splash-copy{width:100%;max-width:680px;text-align:center;display:flex;flex-direction:column;gap:26px;align-items:center;transform:translateY(-2vh)}
-.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.01em;text-wrap:balance;opacity:0;transform:translateY(10px);animation:sentenceArrive 1.25s ease-out forwards}
-.splash-line:nth-child(1){animation-delay:.4s}
-.splash-line:nth-child(2){animation-delay:2.15s}
-.splash-line:nth-child(3){animation-delay:3.95s;color:#f0f8ff}
-.splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;animation:sentenceArrive 1s ease-out 5.55s forwards}
+.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.01em;text-wrap:balance;opacity:0;transform:translateY(10px);animation:sentenceArrive 1.1s ease-out forwards}
+.splash-line:nth-child(1){animation-delay:.3s}
+.splash-line:nth-child(2){animation-delay:1.85s}
+.splash-line:nth-child(3){animation-delay:3.4s;color:#f0f8ff}
+.splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;animation:sentenceArrive .9s ease-out 4.9s forwards}
 .splash-skip{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));right:27px;border:0;background:transparent;color:#9eb6c8;padding:13px 5px;font-size:12px;letter-spacing:.06em}
 @keyframes sentenceArrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.splash-line,.splash-credit{animation:none;opacity:1;transform:none}.splash{transition:none}}
@@ -236,7 +236,7 @@ input{height:47px}
   document.getElementById('skipSplash').addEventListener('click',close);
   // Full text is available immediately even if JavaScript fails.
   // Reveal one full sentence at a time, then hold the complete quote to read.
-  setTimeout(close,9500);
+  setTimeout(close,8200);
 })();
 </script>
 <script>
