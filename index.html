@@ -105,20 +105,18 @@ input{height:47px}
   .logo{width:53px;height:53px}
 }
 
-/* V8 opening: measured editorial typewriter reveal */
-.splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(150deg,#060d17,#09172a 57%,#050b14);color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity .65s ease;isolation:isolate}
+/* V10: sentence-by-sentence cinematic typography reveal */
+.splash{position:fixed;inset:0;z-index:1000;background:linear-gradient(150deg,#060d17,#09172a 57%,#050b14);color:#edf4fb;display:flex;align-items:center;justify-content:center;padding:36px 30px;opacity:1;transition:opacity 1s ease;isolation:isolate}
 .splash.leaving{opacity:0;pointer-events:none}
-.splash-copy{width:100%;max-width:680px;text-align:center;display:flex;flex-direction:column;gap:28px;align-items:center;transform:translateY(-2vh)}
-.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.015em;min-height:1.45em;text-wrap:balance;display:flex;justify-content:center;align-items:center}
-.splash-line span{display:inline-block;white-space:pre-wrap;overflow-wrap:anywhere}
-.splash-line.typing span::after{content:"";display:inline-block;width:2px;height:.95em;background:#e8f3fb;margin-left:6px;vertical-align:-.08em;animation:caretBlink .9s steps(1) infinite;box-shadow:0 0 10px rgba(208,233,255,.18)}
-.splash-line.done span::after{display:none}
-.splash-line.final span{color:#f0f8ff;text-shadow:0 0 34px rgba(167,207,246,.15)}
-.splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
-.splash-credit.visible{opacity:1;transform:translateY(0)}
+.splash-copy{width:100%;max-width:680px;text-align:center;display:flex;flex-direction:column;gap:26px;align-items:center;transform:translateY(-2vh)}
+.splash-line{margin:0;font:normal clamp(23px,5.9vw,36px)/1.45 Georgia,'Times New Roman',serif;letter-spacing:.01em;text-wrap:balance;opacity:0;transform:translateY(10px);animation:sentenceArrive 1.25s ease-out forwards}
+.splash-line:nth-child(1){animation-delay:.4s}
+.splash-line:nth-child(2){animation-delay:2.15s}
+.splash-line:nth-child(3){animation-delay:3.95s;color:#f0f8ff}
+.splash-credit{margin:13px 0 0;color:#9fbbce;font-size:11px;font-weight:600;letter-spacing:.24em;opacity:0;animation:sentenceArrive 1s ease-out 5.55s forwards}
 .splash-skip{position:absolute;bottom:max(30px,env(safe-area-inset-bottom));right:27px;border:0;background:transparent;color:#9eb6c8;padding:13px 5px;font-size:12px;letter-spacing:.06em}
-@keyframes caretBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
-@media(prefers-reduced-motion:reduce){.splash{transition:none}.splash-credit{transition:none}.splash-line span::after{display:none}}
+@keyframes sentenceArrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.splash-line,.splash-credit{animation:none;opacity:1;transform:none}.splash{transition:none}}
 .tools{position:relative;flex-shrink:0}
 .tools summary{list-style:none;display:flex;align-items:center;justify-content:center;font-size:25px;color:#c7ddec;letter-spacing:.03em;cursor:pointer;width:42px;height:42px;touch-action:manipulation}
 .tools summary::-webkit-details-marker{display:none}
@@ -130,10 +128,10 @@ input{height:47px}
 <body>
 <section class="splash" id="splash" aria-label="Opening Muhammad Ali quote">
   <div class="splash-copy">
-    <p class="splash-line">I KNOW YOU’VE GOT HIM PICKED.</p>
-    <p class="splash-line">BUT THE MAN’S IN TROUBLE.</p>
-    <p class="splash-line final">I’M GONNA SHOW YOU HOW GREAT I AM.</p>
-    <p class="splash-credit">— MUHAMMAD ALI</p>
+    <p class="splash-line">I know you’ve got him picked.</p>
+    <p class="splash-line">But the man’s in trouble.</p>
+    <p class="splash-line final">I’m gonna show you how great I am.</p>
+    <p class="splash-credit">— Muhammad Ali</p>
   </div>
   <button type="button" class="splash-skip" id="skipSplash" aria-label="Skip opening">Skip →</button>
 </section>
@@ -237,8 +235,8 @@ input{height:47px}
   }
   document.getElementById('skipSplash').addEventListener('click',close);
   // Full text is available immediately even if JavaScript fails.
-  // Allow time to read it; no letter or sentence animations.
-  setTimeout(close,7800);
+  // Reveal one full sentence at a time, then hold the complete quote to read.
+  setTimeout(close,9500);
 })();
 </script>
 <script>
